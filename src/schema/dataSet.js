@@ -1,4 +1,4 @@
-export const formSchema = {
+const schema = {
   name: {
     title: 'Name',
     required: true,
@@ -11,12 +11,11 @@ export const formSchema = {
     min: '2001-01-01',
   },
   gender: {
-    title: 'gender identity',
+    title: 'Gender',
     required: false,
     options: [
       { name: 'Female', value: 1 },
       { name: 'Male', value: 2 },
-      { name: 'Other', value: 3 },
     ],
   },
   number: {
@@ -29,18 +28,23 @@ export const formSchema = {
     }
   },
   guardianConsent: {
+    title: 'Guardian required',
     type: 'checkbox',
     required: false,
   },
   guardian: {
     required: false,
     name: {
+      title: `Guardian's name`,
       type: 'text',
       required: true,
     },
     contact: {
+      title: `Guardian's contact number`,
       type: 'tel',
       required: true,  
     }
   },
 }
+
+export default schema

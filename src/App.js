@@ -1,18 +1,17 @@
 import React from 'react';
-import Input from './components/Input'
+import Form from './components/form'
+import Preview from './components/statePreview'
+import schema from './schema/dataSet'
 
 
 function App() {
   return (
     <div>
-      <Input
-       name={'nam'}
-       title={'name'}
-       required
-       type={'text'}
-       values={{}}
-       onChange={() =>{}}
+      <Form 
+        schema={schema}
       />
+
+
 
     </div>
   );
