@@ -14,8 +14,8 @@ const Sdiv = styled.div`
 
 const Sinput = styled.input`
   padding: 10px;
-  margin: 6px;
-  border-radius: 5%;
+  margin: 5px;
+  border-radius: 2%;
 `
 const Select = styled.select`
   padding: 10px;
@@ -79,67 +79,84 @@ const rawSelect =
 
 
 const handledob = ({
-    title
-    , required
+     required
     , type
     , onChange
     , values
     , name
-    , options
     , min
     , max
 }) => (
   <React.Fragment>
-
-  <Sinput
-    type={type}
-    id={name}
-    name={name}
-    required={required}
-    onChange={onChange}
-    value={values[name]}
-    min={min}
-    max={max}
-    disabled={values['guardianConsent']}
+    <Sinput
+      type={type}
+      id={name}
+      name={name}
+      required={required}
+      onChange={onChange}
+      value={values[name]}
+      min={min}
+      max={max}
+      disabled={values['guardianConsent']}
+      /> 
+    
+    <Slabel htmlFor={'guardianConsent'}>I'm under 18.</Slabel>
+    <Sinput
+      type={'checkbox'}
+      id={'guardianConsent'}
+      name={'guardianConsent'}
+      onClick={onChange}
+      value={
+        values[name]['guardianConsent']}
     /> 
+    { values['guardianConsent'] && (
+      <React.Fragment>
+        <Slabel htmlFor={'guardianName'}>Guardian's Name</Slabel>
+          <Sinput
+            type={'text'}
+            id={'guardianName'}
+            name={'guardianName'}
+            onChange={onChange}
+            value={values.dob.guardianName}
+            />
 
-   
-  <Slabel htmlFor={'guardianConsent'}>I'm under 18.</Slabel>
-  <Sinput
-    type={'checkbox'}
-    id={'guardianConsent'}
-    name={'guardianConsent'}
-    onClick={onChange}
-    value={
-      values[name]['guardianConsent']}
-  /> 
-  { values['guardianConsent'] && (
-    <React.Fragment>
-    
-      <Slabel htmlFor={'guardianName'}>Guardian's Name</Slabel>
-        <Sinput
-          type={'text'}
-          id={'guardianName'}
-          name={'guardianName'}
-          onChange={onChange}
-          value={values.dob.guardianName}
-          />
-
-      <Slabel htmlFor={'guardianContact'}>Guardian's Mobile</Slabel>
-        <Sinput
-          type={'tel'}
-          id={'guardianContact'}
-          name={'guardianContact'}
-          onChange={onChange}
-          value={values.dob.guardianContact}
-          />
-    
-    </React.Fragment>
-  )}
+        <Slabel htmlFor={'guardianContact'}>Guardian's Mobile</Slabel>
+          <Sinput
+            type={'tel'}
+            id={'guardianContact'}
+            name={'guardianContact'}
+            onChange={onChange}
+            value={values.dob.guardianContact}
+            />
+      </React.Fragment>
+    )}
 
   </React.Fragment>
   
 )
+
+
+const handleContactdetails = ({
+  required
+  , type
+  , onChange
+  , values
+  , name
+  , prefix
+}) => (
+  <React.Fragment>
+  <Slabel htmlFor={'guardianConsent'}>Mobile</Slabel>
+    <Sinput
+      type={'checkbox'}
+      id={'contact.mobile'}
+      name={'contact.mobile'}
+      onClick={onChange}
+      value={values.contact.mobile}
+      /> 
+  </React.Fragment>
+)
+
+
 
 
 const whichInput = ({
@@ -172,7 +189,7 @@ const whichInput = ({
     , values
     })
   ,
-  'tel':  () => rawInput({
+  'tel':  () => handleContactdetails({
       required
     , type
     , onChange

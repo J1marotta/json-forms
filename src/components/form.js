@@ -7,7 +7,7 @@ import Preview from './statePreview';
 const Sbutton = styled.button`
   padding: 10px;
   margin: 6px;
-  border-radius: 5%;
+  border-radius: 2%;
  
     @media(min-width: 750px) {
       justify-self: center;
