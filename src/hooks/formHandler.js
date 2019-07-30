@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
 const useFormHandler = (initialState, callback) => {
+
+
   const [values, setValues] = useState(initialState)
 
   const handleSubmit = e => {
@@ -8,8 +10,15 @@ const useFormHandler = (initialState, callback) => {
     callback(values)
   }
 
-  const handleChange = ({ target: { name, value }}) => {
-    setValues(values => ({...values, [name]: value }))
+  // { name, value, checked }
+  const handleChange = e =>  {
+    e.persist()
+
+    const value = e.target.type === 'checkbox' 
+    ? e.target.checked 
+    : e.target.value
+
+    setValues(values => ({...values, [e.target.name]: value }))
   }
     
     return {

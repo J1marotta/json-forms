@@ -8,18 +8,25 @@ const schema = {
     title: 'Date of birth',
     required: true,
     type: 'date',
-    min: '2001-01-01',
+    max: '2001-01-01',
+    min: '1920-01-01',
+    guardianConsent: {
+      title: 'Guardian required',
+      type: 'checkbox',
+      required: false,
+    },
   },
   gender: {
     title: 'Gender',
     required: false,
+    type: 'select',
     options: [
       { name: 'Female', value: 1 },
       { name: 'Male', value: 2 },
     ],
   },
-  number: {
-    title: 'Number',
+  contact: {
+    title: 'Contact',
     type: "tel",
     required: false,
     prefix: { 
@@ -27,24 +34,7 @@ const schema = {
       required: true,
     }
   },
-  guardianConsent: {
-    title: 'Guardian required',
-    type: 'checkbox',
-    required: false,
-  },
-  guardian: {
-    required: false,
-    name: {
-      title: `Guardian's name`,
-      type: 'text',
-      required: true,
-    },
-    contact: {
-      title: `Guardian's contact number`,
-      type: 'tel',
-      required: true,  
-    }
-  },
+ 
 }
 
 export default schema
