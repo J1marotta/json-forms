@@ -21,7 +21,13 @@ const Header = styled.h2`
 
 const Fdiv = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(minmax(200px, 1fr));
+  margin: auto;
+  width: 90%;
+
+  @media(min-width: 750px) {
+    width: 60%;
+  }  
 `
 
 
@@ -44,7 +50,7 @@ const Form = ({ schema }) =>  {
         <React.Fragment>
 
           <Fdiv>
-              {Object.entries(schema).map( ([name, data ]) =>
+              {Object.entries(schema).map( ([ name, data ]) =>
                   <Input key={name} name={name} {...data} values={values} onChange={handleChange} />
               )}
             <Sbutton type="submit" >Log it</Sbutton>

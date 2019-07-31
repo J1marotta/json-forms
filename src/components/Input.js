@@ -6,16 +6,12 @@ const Sdiv = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   padding: 10px;
-
-  @media(min-width: 750px) {
-    grid-template-columns: 1fr 1fr;
-  }  
 `
-
 const Sinput = styled.input`
   padding: 10px;
   margin: 5px;
   border-radius: 2%;
+  width: 100%;
 `
 const Select = styled.select`
   padding: 10px;
@@ -27,9 +23,10 @@ const Slabel = styled.label`
   font-weight: 500;
   padding: 1px;
   text-transform: capitalize;
+  justify-self: center;
 `
 
-// input has to handle too much work => dob and contacts
+
 const rawInput = 
 ({
     type
@@ -40,7 +37,8 @@ const rawInput =
   , title
   , min
   , max
-}) => (
+  , hidden
+}) => !hidden && (
   <Sinput
     type={type}
     id={name}
@@ -97,62 +95,96 @@ const handledob = ({
       value={values[name]}
       min={min}
       max={max}
-      disabled={values['guardianConsent']}
+      disabled={values.guardian.required}
       /> 
     
-    <Slabel htmlFor={'guardianConsent'}>I'm under 18.</Slabel>
+    {/* start of non-dynamic section because we are expecting dates to be used for dob */}
+    
+    <Slabel htmlFor={'guardian.required'}>I'm under 18.</Slabel>
     <Sinput
       type={'checkbox'}
-      id={'guardianConsent'}
-      name={'guardianConsent'}
+      id={'guardian.required'}
+      name={'guardian.required'}
       onClick={onChange}
       value={
-        values[name]['guardianConsent']}
+        values.guardian.required
+      }
     /> 
-    { values['guardianConsent'] && (
+
+    { values.guardian.required && (
       <React.Fragment>
-        <Slabel htmlFor={'guardianName'}>Guardian's Name</Slabel>
+        <Slabel htmlFor={'guardian.name'}>Guardian's Name</Slabel>
           <Sinput
             type={'text'}
-            id={'guardianName'}
-            name={'guardianName'}
+            id={'guardian.name'}
+            name={'guardian.name'}
             onChange={onChange}
-            value={values.dob.guardianName}
+            value={values.guardian.name}
             />
 
-        <Slabel htmlFor={'guardianContact'}>Guardian's Mobile</Slabel>
+        <Slabel htmlFor={'guardian.contact'}>Guardian's Mobile</Slabel>
           <Sinput
-            type={'tel'}
-            id={'guardianContact'}
-            name={'guardianContact'}
+            type={'number'}
+            id={'guardian.contact'}
+            name={'guardian.contact'}
             onChange={onChange}
-            value={values.dob.guardianContact}
+            value={values.guardian.contact}
             />
       </React.Fragment>
     )}
 
-  </React.Fragment>
-  
+  </React.Fragment>  
 )
 
 
-const handleContactdetails = ({
-  required
-  , type
-  , onChange
+const handleContactdetails = ({  
+   onChange
   , values
-  , name
-  , prefix
 }) => (
   <React.Fragment>
-  <Slabel htmlFor={'guardianConsent'}>Mobile</Slabel>
-    <Sinput
-      type={'checkbox'}
-      id={'contact.mobile'}
-      name={'contact.mobile'}
-      onClick={onChange}
-      value={values.contact.mobile}
-      /> 
+    <Slabel htmlFor={'contact.mobile'}>Mobile</Slabel>
+        <Sinput
+          type={'checkbox'}
+          id={'contact.mobile'}
+          name={'contact.mobile'}
+          onClick={onChange}
+          value={values.contact.mobile}
+        /> 
+
+      { values.contact.mobile && 
+         <React.Fragment>
+            <Slabel htmlFor={'contact.mobileNumber'}>Number</Slabel>
+              <Sinput
+                type={'number'}
+                id={'contact.mobileNumber'}
+                name={'contact.mobileNumber'}
+                onChange={onChange}
+                value={values.contact.mobileNumber}
+                />
+          </React.Fragment>
+      }  
+
+      <Slabel htmlFor={'contact.home'}>Home</Slabel>
+        <Sinput
+          type={'checkbox'}
+          id={'contact.home'}
+          name={'contact.home'}
+          onClick={onChange}
+          value={values.contact.home}
+        /> 
+
+      { values.contact.home && 
+         <React.Fragment>
+            <Slabel htmlFor={'contact.homeNumber'}>Number</Slabel>
+              <Sinput
+                type={'number'}
+                id={'contact.homeNumber'}
+                name={'contact.homeNumber'}
+                onChange={onChange}
+                value={values.contact.homeNumber}
+                />
+          </React.Fragment>
+      }  
   </React.Fragment>
 )
 
@@ -189,7 +221,7 @@ const whichInput = ({
     , values
     })
   ,
-  'tel':  () => handleContactdetails({
+  'number': () => handleContactdetails({
       required
     , type
     , onChange
@@ -235,7 +267,8 @@ const Input =
   , min
   , max
   , prefix
-}) => (
+  , hidden
+}) => !hidden && (
   <Sdiv key={name}>
     <Slabel htmlFor={name}>{title}</Slabel>
     {  

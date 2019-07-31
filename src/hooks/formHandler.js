@@ -10,15 +10,45 @@ const useFormHandler = (initialState, callback) => {
     callback(values)
   }
 
-  // { name, value, checked }
+  
   const handleChange = e =>  {
     e.persist()
 
-    const value = e.target.type === 'checkbox' 
-    ? e.target.checked 
-    : e.target.value
+    const value =  e.target.type === 'checkbox' 
+      ? e.target.checked 
+      : e.target.value
 
-    setValues(values => ({...values, [e.target.name]: value }))
+    
+    const path = e.target.name.split('.')
+
+
+    const assoc = (key, value, target) => {
+        target[key] = value
+        return target
+    }
+
+    const assocPath = (path, value, src) => {
+      const key = path.slice(-1)[0]
+      const target = path.slice(0, -1)
+        .reduce(
+          (p,k) => p[k] = p[k] || {}, src
+        )
+
+      assoc(key, value, target)
+      return src
+    }
+    
+
+    // mix our old values with the new values
+    setValues(values => 
+      Object.assign(
+        {},
+          {
+            ...values,
+            ...assocPath(path, value, values)
+          }
+      )
+    )
   }
     
     return {

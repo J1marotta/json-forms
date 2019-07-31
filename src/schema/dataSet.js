@@ -10,11 +10,12 @@ const schema = {
     type: 'date',
     max: '2001-01-01',
     min: '1920-01-01',
-    guardianConsent: {
-      title: 'Guardian required',
-      type: 'checkbox',
-      required: false,
-    },
+  },
+  guardian: {
+    required: false,
+    hidden: true,
+    name: '',
+    contact: '',
   },
   gender: {
     title: 'Gender',
@@ -26,15 +27,11 @@ const schema = {
     ],
   },
   contact: {
-    title: 'Contact',
-    type: "tel",
+    title: 'Contacts',
+    type: "number",
     required: false,
-    prefix: { 
-      type: 'text',
-      required: true,
-    }
   },
- 
+  
 }
 
 export default schema
